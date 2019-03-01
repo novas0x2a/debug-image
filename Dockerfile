@@ -1,7 +1,6 @@
-FROM alpine:3.4
-MAINTAINER Mike Lundy <mike@fluffypenguin.org>
+FROM alpine:3.9
 
-RUN apk add --update --no-cache \
+RUN apk add -U --no-cache \
     bash            \
     bind-tools      \
     curl            \
@@ -10,8 +9,10 @@ RUN apk add --update --no-cache \
     iputils         \
     make            \
     musl-dev        \
-    py-virtualenv   \
+    py3-virtualenv  \
+    python3         \
     tar             \
     vim             \
     wget            \
-    zsh
+    zsh             \
+    && apk --no-cache upgrade
