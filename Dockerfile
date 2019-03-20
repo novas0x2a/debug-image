@@ -9,9 +9,11 @@ RUN apk add -U --no-cache \
     iputils         \
     make            \
     musl-dev        \
+    nmap            \
     py3-virtualenv  \
     python3         \
     tar             \
+    tshark          \
     vim             \
     wget            \
     zsh             \
