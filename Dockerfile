@@ -21,7 +21,7 @@ RUN apk add -U --no-cache \
     && apk --no-cache upgrade
 
 # https://storage.googleapis.com/kubernetes-release/release/stable.txt
-ENV KUBECTL_VERSION v1.13.4
+ENV KUBECTL_VERSION v1.13.6
 
 RUN curl -L -o /usr/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$KUBECTL_VERSION/bin/linux/amd64/kubectl \
     && chmod +x /usr/bin/kubectl
