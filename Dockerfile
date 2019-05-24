@@ -10,6 +10,7 @@ RUN apk add -U --no-cache \
     make            \
     musl-dev        \
     nmap            \
+    postgresql-client \
     py3-virtualenv  \
     python3         \
     tar             \
