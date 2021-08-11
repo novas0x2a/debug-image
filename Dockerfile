@@ -10,9 +10,11 @@ RUN apk add -U --no-cache \
     make            \
     musl-dev        \
     nmap            \
+    openssl         \
     postgresql-client \
     py3-virtualenv  \
     python3         \
+    redis           \
     tar             \
     tcpdump         \
     vim             \
@@ -21,7 +23,7 @@ RUN apk add -U --no-cache \
     && apk --no-cache upgrade
 
 # https://storage.googleapis.com/kubernetes-release/release/stable.txt
-ENV KUBECTL_VERSION v1.20.5
+ENV KUBECTL_VERSION v1.20.9
 
 RUN curl -L -o /usr/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$KUBECTL_VERSION/bin/linux/amd64/kubectl \
     && chmod +x /usr/bin/kubectl
