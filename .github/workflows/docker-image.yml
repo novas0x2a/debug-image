@@ -14,5 +14,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
+
+    # https://github.com/docker/login-action
+    - name: log into dockerhub
+      if: github.event_name != 'pull_request'
+      uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+      with:
+        username: ${{ secrets.DOCKERHUB_USER }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: build image
       run: make build
+
+    - name: push image
+      if: github.event_name != 'pull_request'
+      run: make push
