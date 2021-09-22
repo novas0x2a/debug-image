@@ -25,14 +25,14 @@ jobs:
       run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
 
     - name: log into dockerhub
-      if: ${{ env.PUSH == 'true' }}
+      if: ${{ env.PUSH }}
       uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
       with:
         username: novas0x2a
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: log into ghcr
-      if: ${{ env.PUSH == 'true' }}
+      if: ${{ env.PUSH }}
       uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
       with:
         registry: ghcr.io
@@ -43,7 +43,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         # push: ${{ env.PUSH == 'true' }}
-        load: ${{ env.PUSH != 'true' }}
+        load: ${{ !env.PUSH }}
         platforms: linux/amd64
         tags: |
           novas0x2a/debug:${{ steps.tag.outputs.sha8 }}
