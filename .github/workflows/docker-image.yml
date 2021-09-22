@@ -7,25 +7,46 @@ on:
     branches: [ master ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
+
+    permissions:
+      packages: write
+      contents: read
+
+    env:
+      PUSH: ${{ github.event_name != 'pull_request' }}
 
     steps:
     - uses: actions/checkout@v2
 
-    # https://github.com/docker/login-action
+    - name: get tag
+      id: tag
+      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+
     - name: log into dockerhub
-      if: github.event_name != 'pull_request'
+      if: ${{ env.PUSH == 'true' }}
       uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
       with:
-        username: ${{ secrets.DOCKERHUB_USER }}
+        username: novas0x2a
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: build image
-      run: make build
+    - name: log into ghcr
+      if: ${{ env.PUSH == 'true' }}
+      uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: push image
-      if: github.event_name != 'pull_request'
-      run: make push
+    - name: build (push=${{ env.PUSH }}, tag=${{ steps.tag.outputs.sha8 }})
+      uses: docker/build-push-action@v2
+      with:
+        # push: ${{ env.PUSH == 'true' }}
+        load: ${{ env.PUSH != 'true' }}
+        platforms: linux/amd64
+        tags: |
+          novas0x2a/debug:${{ steps.tag.outputs.sha8 }}
+          novas0x2a/debug:latest
+          ghcr.io/novas0x2a/debug:${{ steps.tag.outputs.sha8 }}
+          ghcr.io/novas0x2a/debug:latest
