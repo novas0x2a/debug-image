@@ -26,14 +26,14 @@ jobs:
 
     - name: log into dockerhub
       if: ${{ env.PUSH == 'true' }}
-      uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+      uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
       with:
         username: novas0x2a
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: log into ghcr
       if: ${{ env.PUSH == 'true' }}
-      uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+      uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
