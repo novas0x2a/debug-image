@@ -40,7 +40,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: build (push=${{ env.PUSH }}, tag=${{ steps.tag.outputs.sha8 }})
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v4
       with:
         push: ${{ env.PUSH == 'true' }}
         load: ${{ env.PUSH != 'true' }}
